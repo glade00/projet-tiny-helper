@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les catégories{% endblock %}
+
+{% block body %}
+<header class="" >
+<nav class="col-12 navbar navbar-expand-lg navbar-light  justify-content-center justify-content-between  align-items-start align-items-md-center  d-flex  flex-md-column .flex-row">
+<div class=" title__header d-flex justify-content-center align-items-center header">
+  <img class="logo m-3" src="{{asset('assets/images/icon.png')}}" alt="">
+ <h1 class="color_1 "  >Petites aides</h1>
+</div>
+
+ <p class="font-italic color_1 m-4 d-none d-md-block">
+Une collection d'outils en ligne à usage unique gratuits pour les développeurs Web...</p>
+ 
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse col-12 my-4" id="navbarTogglerDemo02">
+    <ul class="navbar-nav  d-flex justify-content-center align-items-start flex-column">
+      <li class="">
+        <h2 >Catégories </h2>
+      </li>
+      <li class="nav-item d-flex m-2">
+        <a class="nav-link" href="{{ path('sites_index') }}">Toutes les catégories</a>
+      </li>
+      {% for categorie in categories %}
+ 
+      {% if categorie.sites|length > 0 %}
+      <li class="nav-item d-flex m-2 ">
+        <a class="nav-link col-10" href="{{ path('sites_tag_show', {'id': categorie.id}) }}">{{ categorie.title }} </a>
+
+        <p class="nav-link col-2">{{categorie.sites|length}}</p>
+</li>
+{% endif %}   
+     {% endfor %}
+    </ul>
+
+  </div>
+</nav>
+
+</header>
+
+<section class=" content" >
+<section class="reseaux w-100 title__header ">
+<div class="col-11 d-flex justify-content-end align-items-center">
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  <i class="las la-user-circle"></i>
+  <p class="m-2">{{ app.user.username }}</p>
+  <a class="ml-2 m-2  btn btn-outline-dark " href="{{ path('app_logout') }}">Déconnexion</a>
+{% endif %}
+</div>
+</section>
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<section class="menu__admin w-100 p-4 d-flex justify-content-start align-items-center flex-column flex-md-row">
+<p class="px-4">Vous pouvez réaliser les actions suivantes :</p>
+<a href="{{ path('index') }}" class="btn btn-outline-danger mx-4 m-1">Retourner au site</a>
+<a href="{{ path('sites_new') }}" class="btn btn-outline-danger mx-4 m-1">Ajouter un site/outil</a>
+
+
+<a href="{{ path('category_new') }} " class="btn btn-outline-danger mx-4 m-1">Ajouter une catégorie</a>
+
+</section>
+{% endif %}
+
+<section class="debut col-12 d-flex flex-column flex-md-row">
+  <h3 class="debut__title col-md-6 col-sm-12 p-4 text-md-left text-center">Toutes les catégories</h3>
+   <a class=" m-4 btn btn-outline-dark" href="{{ path('sites_index') }}">Retourner à la liste des sites</a>
+</section>
+
+<section class="sites col-12 d-flex flex-wrap justify-content-around">
+
+<div class="w-75">
+    
+    <table class="table ">
+        <thead>
+            <tr>
+                
+                <th>Nom</th>
+                <th>Créer le</th>
+{% if is_granted('ROLE_ADMIN') %}
+                <th>Modifications</th>
+{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                
+                <td>{{ category.title }}</td>
+                <td>{{ category.createdAt ? category.createdAt|date('d/m/Y') : '' }}</td>
+                 {% if is_granted('ROLE_ADMIN') %}
+                <td class="d-flex">
+               
+ {{ include('backoffice/category/_delete_form.html.twig') }}
+   <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-outline-success m-1">Modifier</a>
+    </td>
+{% endif %}
+
+                   
+                  
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas de catégories trouvées.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+    
+
+   
+   
+    
+
+  
+  
+  
+
+</section>
+</section>
+
+{% endblock %}

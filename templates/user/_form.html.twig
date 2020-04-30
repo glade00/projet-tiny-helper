@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+<div class="mb-3 col-md-6 col-sm-12 offset-md-3 connexion text-center">
+         Inscrivez-vous ici pour pouvoir partager vos outils !
+        </div>
+<div class=" col-md-4 col-sm-12 offset-md-4 formulaire__content" >
+<h1 class="h3 mb-3 font-weight-normal">S'inscrire</h1>
+    {{ form_row(form.email) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+ 
+    <button type="submit" class="btn btn-lg btn-primary mt-4">S'inscrire!</button>
+    </div>
+{{ form_end(form) }}

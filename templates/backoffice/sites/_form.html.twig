@@ -1,0 +1,24 @@
+{{ form_start(form, { 'attr' : { 'style': 'font-family: "Antic", sans-serif; font-weight:bold;'}}) }}
+{{ form_row(form.title) }}
+{{ form_row(form.description) }}
+
+{{ form_row(form.link) }}
+
+{{ form_row(form.category, { 'attr' : { 'class': 'd-flex m-4 p-1 flex-wrap tag'}}) }}
+
+<a href="{{ path( 'category_new' ) }}" class="btn btn-outline-info mb-3">Ajouter un mot clé</a>
+
+
+
+
+{{ form_row(form.illustration) }}
+         <div class="col-12">
+          <h2>Aperçu des illustrations</h2>
+          <div class='gallery row border my-3' id="gallery" style="min-height:150px;"></div>
+        </div>
+{{ form_errors(form) }}
+
+    <button class="btn btn-outline-success m-2">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+
+
